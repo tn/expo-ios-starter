@@ -1,12 +1,33 @@
-import { FC, ReactNode, useState } from 'react'
-import { Pressable, PressableProps, View } from 'react-native'
+import { ComponentProps, FC, ReactNode, useEffect, useState } from 'react'
+import {
+  Pressable,
+  PressableProps,
+  StyleSheet as RNStyleSheet,
+  View,
+} from 'react-native'
+import Animated, {
+  cancelAnimation,
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated'
 import { StyleSheet } from 'react-native-unistyles'
 
+import { Icon } from '@/components/Icon'
 import { ThemedText } from '@/components/ThemedText'
+import { useTheme } from '@/hooks/useTheme'
 
 type Tone = 'neutral' | 'accent' | 'accentSubtle'
 type Size = 'small' | 'medium' | 'large'
 type Radius = 'none' | 'small' | 'medium' | 'large' | 'full'
+type IconTone = ComponentProps<typeof Icon>['tone']
+
+type ButtonIconConfig = Pick<
+  ComponentProps<typeof Icon>,
+  'name' | 'tone' | 'size' | 'weight' | 'scale' | 'type' | 'fallback'
+>
 
 type Props = Omit<PressableProps, 'children'> & {
   children?: ReactNode
@@ -14,6 +35,11 @@ type Props = Omit<PressableProps, 'children'> & {
   size?: Size
   tone?: Tone
   radius?: Radius
+  leftIcon?: ButtonIconConfig
+  rightIcon?: ButtonIconConfig
+  gap?: number
+  loading?: boolean
+  loadingIcon?: ButtonIconConfig
 }
 
 const labelSizeByButtonSize: Record<Size, 'footnote' | 'callout' | 'headline'> =
@@ -23,27 +49,112 @@ const labelSizeByButtonSize: Record<Size, 'footnote' | 'callout' | 'headline'> =
     large: 'headline',
   }
 
+const iconSizeByButtonSize: Record<Size, number> = {
+  small: 14,
+  medium: 16,
+  large: 18,
+}
+
+const getDefaultIconTone = (
+  tone: Tone,
+  interaction: 'idle' | 'pressed' | 'disabled',
+): IconTone => {
+  if (interaction === 'disabled') {
+    return 'disabled'
+  }
+
+  if (tone === 'accent') {
+    return 'onAccent'
+  }
+
+  if (tone === 'accentSubtle') {
+    return 'accent'
+  }
+
+  return 'primary'
+}
+
 export const ThemedButton: FC<Props> = ({
   size = 'medium',
   tone = 'neutral',
   radius = 'medium',
   label,
   children,
+  leftIcon,
+  rightIcon,
+  gap,
+  loading = false,
+  loadingIcon,
   disabled = false,
   onPressIn,
   onPressOut,
   style,
+  accessibilityState,
   ...props
 }) => {
+  const theme = useTheme()
   const [pressed, setPressed] = useState(false)
-  const interaction = disabled ? 'disabled' : pressed ? 'pressed' : 'idle'
+  const rotation = useSharedValue(0)
+
+  const effectiveDisabled = disabled || loading
+  const interaction = effectiveDisabled
+    ? 'disabled'
+    : pressed
+      ? 'pressed'
+      : 'idle'
+  const resolvedGap =
+    gap ?? (size === 'large' ? theme.spacing.space12 : theme.spacing.space8)
+  const defaultIconSize = iconSizeByButtonSize[size]
+  const defaultIconTone = getDefaultIconTone(tone, interaction)
+  const resolvedLoadingIcon = loadingIcon ?? { name: 'progress.indicator' }
 
   styles.useVariants({ size, tone, radius, interaction })
+
+  useEffect(() => {
+    if (loading) {
+      rotation.value = withRepeat(
+        withTiming(360, {
+          duration: 900,
+          easing: Easing.linear,
+        }),
+        -1,
+        false,
+      )
+    } else {
+      cancelAnimation(rotation)
+      rotation.value = 0
+    }
+
+    return () => {
+      cancelAnimation(rotation)
+    }
+  }, [loading, rotation])
+
+  const loaderAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }))
+
+  const content =
+    children ??
+    (label ? (
+      <ThemedText
+        style={styles.label}
+        size={labelSizeByButtonSize[size]}
+        weight="semibold"
+      >
+        {label}
+      </ThemedText>
+    ) : null)
 
   return (
     <Pressable
       {...props}
-      disabled={disabled}
+      accessibilityState={{
+        ...accessibilityState,
+        disabled: effectiveDisabled,
+        busy: !!loading,
+      }}
+      disabled={effectiveDisabled}
       onPressIn={event => {
         setPressed(true)
         onPressIn?.(event)
@@ -55,16 +166,54 @@ export const ThemedButton: FC<Props> = ({
       style={style}
     >
       <View style={styles.button}>
-        {children ??
-          (label ? (
-            <ThemedText
-              style={styles.label}
-              size={labelSizeByButtonSize[size]}
-              weight="semibold"
-            >
-              {label}
-            </ThemedText>
-          ) : null)}
+        <View
+          style={[
+            styles.contentRow,
+            { gap: resolvedGap },
+            loading && styles.hidden,
+          ]}
+          accessibilityElementsHidden={loading}
+          importantForAccessibility={loading ? 'no-hide-descendants' : 'auto'}
+        >
+          {leftIcon && (
+            <Icon
+              name={leftIcon.name}
+              tone={leftIcon.tone ?? defaultIconTone}
+              size={leftIcon.size ?? defaultIconSize}
+              weight={leftIcon.weight}
+              scale={leftIcon.scale}
+              type={leftIcon.type}
+              fallback={leftIcon.fallback}
+            />
+          )}
+          {content}
+          {rightIcon && (
+            <Icon
+              name={rightIcon.name}
+              tone={rightIcon.tone ?? defaultIconTone}
+              size={rightIcon.size ?? defaultIconSize}
+              weight={rightIcon.weight}
+              scale={rightIcon.scale}
+              type={rightIcon.type}
+              fallback={rightIcon.fallback}
+            />
+          )}
+        </View>
+        {loading && (
+          <View style={styles.loaderOverlay} pointerEvents="none">
+            <Animated.View style={loaderAnimatedStyle}>
+              <Icon
+                name={resolvedLoadingIcon.name}
+                tone={resolvedLoadingIcon.tone ?? defaultIconTone}
+                size={resolvedLoadingIcon.size ?? defaultIconSize}
+                weight={resolvedLoadingIcon.weight}
+                scale={resolvedLoadingIcon.scale}
+                type={resolvedLoadingIcon.type}
+                fallback={resolvedLoadingIcon.fallback}
+              />
+            </Animated.View>
+          </View>
+        )}
       </View>
     </Pressable>
   )
@@ -74,6 +223,7 @@ const styles = StyleSheet.create(theme => ({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative',
     variants: {
       size: {
         small: {
@@ -185,6 +335,19 @@ const styles = StyleSheet.create(theme => ({
       },
     ],
   },
+  contentRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  hidden: {
+    opacity: 0,
+  },
+  loaderOverlay: {
+    ...RNStyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   label: {
     variants: {
       tone: {
@@ -217,3 +380,5 @@ const styles = StyleSheet.create(theme => ({
     ],
   },
 }))
+
+export type { ButtonIconConfig }

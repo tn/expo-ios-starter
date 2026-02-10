@@ -45,8 +45,20 @@ export const FormScreen: FC = () => {
     },
   })
 
-  const onSubmit = (data: FormValues) => {
-    Alert.alert('Form Submitted', JSON.stringify(data, null, 2))
+  const onSubmit = async (data: FormValues) => {
+    const simulateNetworkRequest = new Promise(resolve =>
+      setTimeout(resolve, 2000),
+    )
+
+    try {
+      await simulateNetworkRequest
+      Alert.alert('Form Submitted', JSON.stringify(data, null, 2))
+    } catch {
+      Alert.alert(
+        'Submission Failed',
+        'An error occurred while submitting the form.',
+      )
+    }
   }
 
   return (
@@ -115,6 +127,7 @@ export const FormScreen: FC = () => {
         label="Submit"
         onPress={handleSubmit(onSubmit)}
         disabled={isSubmitting}
+        loading={isSubmitting}
         tone="accent"
         radius="full"
         size="large"
