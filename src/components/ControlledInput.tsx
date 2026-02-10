@@ -23,7 +23,11 @@ export const ControlledInput = <TFieldValues extends FieldValues>({
 
   return (
     <ThemedView style={styles.vStack}>
-      {label && <ThemedText>{label}</ThemedText>}
+      {label && (
+        <ThemedText tone="secondary" size="callout" weight="medium">
+          {label}
+        </ThemedText>
+      )}
       <Input
         onBlur={onBlur}
         onChangeText={onChange}
@@ -32,13 +36,17 @@ export const ControlledInput = <TFieldValues extends FieldValues>({
         editable={!disabled}
         {...textInputProps}
       />
-      {fieldState.error && <ThemedText>{fieldState.error.message}</ThemedText>}
+      {fieldState.error && (
+        <ThemedText tone="accent" size="footnote">
+          {fieldState.error.message}
+        </ThemedText>
+      )}
     </ThemedView>
   )
 }
 
 const styles = StyleSheet.create(theme => ({
   vStack: {
-    gap: theme.spacing[2],
+    gap: theme.spacing.space8,
   },
 }))

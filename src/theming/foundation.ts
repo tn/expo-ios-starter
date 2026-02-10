@@ -1,58 +1,63 @@
+import { StyleSheet } from 'react-native'
+
 const spacing = {
-  1: 4,
-  2: 8,
-  3: 12,
-  4: 16,
-  5: 20,
-  6: 24,
-  7: 32,
-  8: 40,
-  9: 48,
-  10: 64,
-  11: 80,
+  space4: 4,
+  space8: 8,
+  space12: 12,
+  space16: 16,
+  space20: 20,
+  space24: 24,
+  space32: 32,
+  space40: 40,
+  space48: 48,
+  space64: 64,
+  space80: 80,
 } as const
 
 const sizing = {
-  1: 4,
-  2: 8,
-  3: 12,
-  4: 16,
-  5: 20,
-  6: 24,
-  7: 32,
-  8: 40,
-  9: 48,
-  10: 64,
-  11: 80,
-  12: 96,
+  size4: 4,
+  size8: 8,
+  size12: 12,
+  size16: 16,
+  size20: 20,
+  size24: 24,
+  size32: 32,
+  size40: 40,
+  size44: 44,
+  size48: 48,
+  size64: 64,
+  size80: 80,
+  size96: 96,
 } as const
 
 const radii = {
-  1: 4,
-  2: 8,
-  3: 12,
-  4: 16,
-  5: 20,
-  6: 28,
-  12: 999,
+  corner0: 0,
+  corner4: 4,
+  corner8: 8,
+  corner12: 12,
+  corner16: 16,
+  corner20: 20,
+  corner28: 28,
+  full: 999,
 } as const
 
 const zIndices = {
-  1: 100,
-  2: 200,
-  3: 400,
-  4: 600,
-  5: 800,
-  6: 999,
+  base: 100,
+  raised: 200,
+  floating: 400,
+  overlay: 600,
+  toast: 800,
+  topmost: 999,
 } as const
 
 const elevations = {
-  1: 1,
-  2: 2,
-  3: 4,
-  4: 8,
-  5: 12,
-  6: 16,
+  none: 0,
+  subtle: 1,
+  soft: 2,
+  medium: 4,
+  strong: 8,
+  intense: 12,
+  dramatic: 16,
 } as const
 
 const fonts = {
@@ -63,33 +68,31 @@ const fonts = {
 } as const
 
 const fontSizes = {
-  1: 11,
-  2: 12,
-  3: 13,
-  4: 15,
-  5: 16,
-  6: 17,
-  7: 17,
-  8: 20,
-  9: 22,
-  10: 28,
-  11: 34,
-  default: 16,
+  caption2: 11,
+  caption1: 12,
+  footnote: 13,
+  subheadline: 15,
+  callout: 16,
+  body: 17,
+  headline: 17,
+  title3: 20,
+  title2: 22,
+  title1: 28,
+  largeTitle: 34,
 } as const
 
 const lineHeights = {
-  1: 13,
-  2: 16,
-  3: 18,
-  4: 20,
-  5: 21,
-  6: 22,
-  7: 22,
-  8: 24,
-  9: 28,
-  10: 34,
-  11: 41,
-  default: 21,
+  caption2: 13,
+  caption1: 16,
+  footnote: 18,
+  subheadline: 20,
+  callout: 21,
+  body: 22,
+  headline: 22,
+  title3: 24,
+  title2: 28,
+  title1: 34,
+  largeTitle: 41,
 } as const
 
 const fontWeights = {
@@ -106,7 +109,7 @@ const letterSpacings = {
 } as const
 
 const borderWidths = {
-  hairline: 0.5,
+  hairline: StyleSheet.hairlineWidth,
   thin: 1,
   thick: 2,
 } as const

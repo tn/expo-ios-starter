@@ -16,9 +16,9 @@ export const HomeScreen: FC = () => {
       withSafeArea={false}
     >
       <View style={styles.vStack}>
-        <ThemedText size="heading">Expo iOS Starter</ThemedText>
+        <ThemedText size="title3">Expo iOS Starter</ThemedText>
         <View style={styles.hStack}>
-          <Square variant="surface" size={40} radius="medium">
+          <Square tone="surface" size={40} radius="medium">
             <Icon
               name="point.bottomleft.forward.to.arrow.triangle.scurvepath"
               size={24}
@@ -27,43 +27,43 @@ export const HomeScreen: FC = () => {
           <ThemedText>Expo Router</ThemedText>
         </View>
         <View style={styles.hStack}>
-          <Square variant="surface" size={40} radius="medium">
+          <Square tone="surface" size={40} radius="medium">
             <Icon name="paintpalette" size={24} />
           </Square>
           <ThemedText>Unistyles</ThemedText>
         </View>
         <View style={styles.hStack}>
-          <Square variant="surface" size={40} radius="medium">
+          <Square tone="surface" size={40} radius="medium">
             <Icon name="swatchpalette" size={24} />
           </Square>
           <ThemedText>Basic theming</ThemedText>
         </View>
         <View style={styles.hStack}>
-          <Square variant="surface" size={40} radius="medium">
+          <Square tone="surface" size={40} radius="medium">
             <Icon name="circle.filled.iphone" size={24} />
           </Square>
           <ThemedText>BootSplash</ThemedText>
         </View>
         <View style={styles.hStack}>
-          <Square variant="surface" size={40} radius="medium">
+          <Square tone="surface" size={40} radius="medium">
             <Icon name="sparkle.magnifyingglass" size={24} />
           </Square>
           <ThemedText>Pre-configured Eslint and Prettier</ThemedText>
         </View>
         <View style={styles.hStack}>
-          <Square variant="surface" size={40} radius="medium">
+          <Square tone="surface" size={40} radius="medium">
             <Icon name="star" size={24} />
           </Square>
           <ThemedText>Expo Symbols (Beta)</ThemedText>
         </View>
         <View style={styles.hStack}>
-          <Square variant="surface" size={40} radius="medium">
+          <Square tone="surface" size={40} radius="medium">
             <Icon name="square.text.square" size={24} />
           </Square>
           <ThemedText>React Hook Form</ThemedText>
         </View>
         <View style={styles.hStack}>
-          <Square variant="surface" size={40} radius="medium">
+          <Square tone="surface" size={40} radius="medium">
             <Icon name="keyboard" size={24} />
           </Square>
           <ThemedText>Keyboard Controller</ThemedText>
@@ -71,7 +71,7 @@ export const HomeScreen: FC = () => {
         <Link href="/form" asChild>
           <ThemedButton
             label="Go to Form"
-            variant="brand"
+            tone="accent"
             radius="full"
             size="medium"
           />
@@ -89,11 +89,11 @@ const styles = StyleSheet.create(theme => ({
     backgroundColor: theme.colors.background.page,
   },
   vStack: {
-    gap: theme.spacing[3],
+    gap: theme.spacing.space12,
   },
   hStack: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing[3],
+    gap: theme.spacing.space12,
   },
 }))

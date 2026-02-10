@@ -3,24 +3,37 @@ import { withUnistyles } from 'react-native-unistyles'
 import { SymbolView, SymbolViewProps } from 'expo-symbols'
 
 type Props = SymbolViewProps & {
-  variant?: 'surface' | 'brand' | 'brandSubtle'
+  tone?:
+    | 'primary'
+    | 'secondary'
+    | 'tertiary'
+    | 'accent'
+    | 'accentStrong'
+    | 'onAccent'
+    | 'disabled'
 }
 
 const StyledSymbolView = withUnistyles(SymbolView)
 
-export const Icon: FC<Props> = ({ variant = 'surface', ...props }) => {
+export const Icon: FC<Props> = ({ tone = 'primary', ...props }) => {
   return (
     <StyledSymbolView
       {...props}
-      uniProps={(theme, rt) => ({
+      uniProps={theme => ({
         tintColor:
-          variant === 'surface'
-            ? theme.colors.foreground.text
-            : variant === 'brand'
-              ? theme.colors.foreground.brand
-              : rt.colorScheme === 'light'
-                ? theme.colors.foreground.brandSubtle
-                : theme.colors.foreground.text,
+          tone === 'primary'
+            ? theme.colors.foreground.neutral.primary
+            : tone === 'secondary'
+              ? theme.colors.foreground.neutral.secondary
+              : tone === 'tertiary'
+                ? theme.colors.foreground.neutral.tertiary
+                : tone === 'accent'
+                  ? theme.colors.foreground.accent.default
+                  : tone === 'accentStrong'
+                    ? theme.colors.foreground.accent.strong
+                    : tone === 'onAccent'
+                      ? theme.colors.foreground.onAccent
+                      : theme.colors.foreground.neutral.disabled,
       })}
     />
   )

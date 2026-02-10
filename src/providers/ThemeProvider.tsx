@@ -22,12 +22,13 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
           dark: colorScheme === 'dark',
           colors: {
             ...DefaultTheme.colors,
-            primary: themes[colorScheme].colors.background.brand,
+            primary: themes[colorScheme].colors.background.accentSolid.default,
             background: themes[colorScheme].colors.background.page,
             card: themes[colorScheme].colors.background.page,
-            text: themes[colorScheme].colors.foreground.text,
-            border: themes[colorScheme].colors.background.surfaceSecondary,
-            notification: themes[colorScheme].colors.background.brand,
+            text: themes[colorScheme].colors.foreground.neutral.primary,
+            border: themes[colorScheme].colors.border.neutral.default,
+            notification:
+              themes[colorScheme].colors.background.accentSolid.default,
           },
         }}
       >

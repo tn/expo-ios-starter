@@ -3,14 +3,31 @@ import { Text, TextProps } from 'react-native'
 import { StyleSheet } from 'react-native-unistyles'
 
 type Props = TextProps & {
-  variant?: 'regular' | 'accent' | 'muted'
-  size?: 'caption' | 'body' | 'heading'
+  tone?:
+    | 'primary'
+    | 'secondary'
+    | 'tertiary'
+    | 'accent'
+    | 'onAccent'
+    | 'disabled'
+  size?:
+    | 'caption2'
+    | 'caption1'
+    | 'footnote'
+    | 'subheadline'
+    | 'callout'
+    | 'body'
+    | 'headline'
+    | 'title3'
+    | 'title2'
+    | 'title1'
+    | 'largeTitle'
   weight?: 'regular' | 'medium' | 'semibold' | 'bold'
   family?: 'sans' | 'serif' | 'rounded' | 'mono'
 }
 
 export const ThemedText: FC<Props> = ({
-  variant = 'regular',
+  tone = 'primary',
   size = 'body',
   weight = 'regular',
   family = 'sans',
@@ -18,7 +35,7 @@ export const ThemedText: FC<Props> = ({
   children,
   ...rest
 }) => {
-  styles.useVariants({ variant, size, weight, family })
+  styles.useVariants({ tone, size, weight, family })
 
   return (
     <Text style={[styles.text, style]} {...rest}>
@@ -31,28 +48,69 @@ const styles = StyleSheet.create(theme => ({
   text: {
     variants: {
       size: {
-        caption: {
-          fontSize: theme.fontSizes[3],
-          lineHeight: theme.lineHeights[3],
+        caption2: {
+          fontSize: theme.fontSizes.caption2,
+          lineHeight: theme.lineHeights.caption2,
+        },
+        caption1: {
+          fontSize: theme.fontSizes.caption1,
+          lineHeight: theme.lineHeights.caption1,
+        },
+        footnote: {
+          fontSize: theme.fontSizes.footnote,
+          lineHeight: theme.lineHeights.footnote,
+        },
+        subheadline: {
+          fontSize: theme.fontSizes.subheadline,
+          lineHeight: theme.lineHeights.subheadline,
+        },
+        callout: {
+          fontSize: theme.fontSizes.callout,
+          lineHeight: theme.lineHeights.callout,
         },
         body: {
-          fontSize: theme.fontSizes[5],
-          lineHeight: theme.lineHeights[5],
+          fontSize: theme.fontSizes.body,
+          lineHeight: theme.lineHeights.body,
         },
-        heading: {
-          fontSize: theme.fontSizes[8],
-          lineHeight: theme.lineHeights[8],
+        headline: {
+          fontSize: theme.fontSizes.headline,
+          lineHeight: theme.lineHeights.headline,
+        },
+        title3: {
+          fontSize: theme.fontSizes.title3,
+          lineHeight: theme.lineHeights.title3,
+        },
+        title2: {
+          fontSize: theme.fontSizes.title2,
+          lineHeight: theme.lineHeights.title2,
+        },
+        title1: {
+          fontSize: theme.fontSizes.title1,
+          lineHeight: theme.lineHeights.title1,
+        },
+        largeTitle: {
+          fontSize: theme.fontSizes.largeTitle,
+          lineHeight: theme.lineHeights.largeTitle,
         },
       },
-      variant: {
-        regular: {
-          color: theme.colors.foreground.text,
+      tone: {
+        primary: {
+          color: theme.colors.foreground.neutral.primary,
+        },
+        secondary: {
+          color: theme.colors.foreground.neutral.secondary,
+        },
+        tertiary: {
+          color: theme.colors.foreground.neutral.tertiary,
         },
         accent: {
-          color: theme.colors.foreground.brand,
+          color: theme.colors.foreground.accent.default,
         },
-        muted: {
-          color: theme.colors.foreground.textSecondary,
+        onAccent: {
+          color: theme.colors.foreground.onAccent,
+        },
+        disabled: {
+          color: theme.colors.foreground.neutral.disabled,
         },
       },
       weight: {
@@ -86,7 +144,31 @@ const styles = StyleSheet.create(theme => ({
     },
     compoundVariants: [
       {
-        size: 'heading',
+        size: 'headline',
+        styles: {
+          fontWeight: theme.fontWeights.semibold,
+        },
+      },
+      {
+        size: 'title3',
+        styles: {
+          fontWeight: theme.fontWeights.semibold,
+        },
+      },
+      {
+        size: 'title2',
+        styles: {
+          fontWeight: theme.fontWeights.semibold,
+        },
+      },
+      {
+        size: 'title1',
+        styles: {
+          fontWeight: theme.fontWeights.semibold,
+        },
+      },
+      {
+        size: 'largeTitle',
         styles: {
           fontWeight: theme.fontWeights.semibold,
         },

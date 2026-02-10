@@ -18,7 +18,7 @@ export const Square: FC<Props> = ({ style, children, size, ...rest }) => {
   )
 }
 
-const styles = StyleSheet.create(theme => ({
+const styles = StyleSheet.create(() => ({
   square: {
     alignItems: 'center',
     justifyContent: 'center',

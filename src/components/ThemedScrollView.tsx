@@ -67,7 +67,7 @@ export const ThemedScrollView: FC<Props> = ({
 const styles = StyleSheet.create((theme, rt) => ({
   scrollView: {
     flexGrow: 1,
-    paddingHorizontal: theme.spacing[5],
+    paddingHorizontal: theme.spacing.space20,
     backgroundColor: theme.colors.background.page,
     variants: {
       withSafeArea: {

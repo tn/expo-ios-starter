@@ -1,76 +1,52 @@
 import { blue, blueDark, gray, grayDark } from '@radix-ui/colors'
 
+type ScaleStep = `step${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12}`
+
+type RadixScale = Record<ScaleStep, string> & {
+  solid: string
+  solidHover: string
+  border: string
+  borderStrong: string
+  text: string
+  textStrong: string
+}
+
+const createRadixScale = (
+  source: Record<string, string>,
+  prefix: string,
+): RadixScale => {
+  const steps = Array.from({ length: 12 }, (_, index) => {
+    const step = (index + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+    const key = `step${step}` as const
+
+    return [key, source[`${prefix}${step}`]]
+  })
+
+  const scale = Object.fromEntries(steps) as Record<ScaleStep, string>
+
+  return {
+    ...scale,
+    solid: scale.step9,
+    solidHover: scale.step10,
+    border: scale.step7,
+    borderStrong: scale.step8,
+    text: scale.step11,
+    textStrong: scale.step12,
+  }
+}
+
+const createTonePair = (
+  lightSource: Record<string, string>,
+  darkSource: Record<string, string>,
+  prefix: string,
+) => ({
+  light: createRadixScale(lightSource, prefix),
+  dark: createRadixScale(darkSource, prefix),
+})
+
 const colors = {
-  base: {
-    ...gray,
-    ...blue,
-    ...grayDark,
-    ...blueDark,
-  },
-  light: {
-    neutral: {
-      neutral1: gray.gray1,
-      neutral2: gray.gray2,
-      neutral3: gray.gray3,
-      neutral4: gray.gray4,
-      neutral5: gray.gray5,
-      neutral6: gray.gray6,
-      neutral7: gray.gray7,
-      neutral8: gray.gray8,
-      neutral9: gray.gray9,
-      neutral10: gray.gray10,
-      neutral11: gray.gray11,
-      neutral12: gray.gray12,
-      default: gray.gray9,
-    },
-    accent: {
-      accent1: blue.blue1,
-      accent2: blue.blue2,
-      accent3: blue.blue3,
-      accent4: blue.blue4,
-      accent5: blue.blue5,
-      accent6: blue.blue6,
-      accent7: blue.blue7,
-      accent8: blue.blue8,
-      accent9: blue.blue9,
-      accent10: blue.blue10,
-      accent11: blue.blue11,
-      accent12: blue.blue12,
-      default: blue.blue9,
-    },
-  },
-  dark: {
-    neutral: {
-      neutral1: grayDark.gray1,
-      neutral2: grayDark.gray2,
-      neutral3: grayDark.gray3,
-      neutral4: grayDark.gray4,
-      neutral5: grayDark.gray5,
-      neutral6: grayDark.gray6,
-      neutral7: grayDark.gray7,
-      neutral8: grayDark.gray8,
-      neutral9: grayDark.gray9,
-      neutral10: grayDark.gray10,
-      neutral11: grayDark.gray11,
-      neutral12: grayDark.gray12,
-      default: grayDark.gray9,
-    },
-    accent: {
-      accent1: blueDark.blue1,
-      accent2: blueDark.blue2,
-      accent3: blueDark.blue3,
-      accent4: blueDark.blue4,
-      accent5: blueDark.blue5,
-      accent6: blueDark.blue6,
-      accent7: blueDark.blue7,
-      accent8: blueDark.blue8,
-      accent9: blueDark.blue9,
-      accent10: blueDark.blue10,
-      accent11: blueDark.blue11,
-      accent12: blueDark.blue12,
-      default: blueDark.blue9,
-    },
-  },
+  neutral: createTonePair(gray, grayDark, 'gray'),
+  accent: createTonePair(blue, blueDark, 'blue'),
 }
 
 export const palette = {

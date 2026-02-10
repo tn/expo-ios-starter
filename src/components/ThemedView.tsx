@@ -3,7 +3,7 @@ import { View, ViewProps } from 'react-native'
 import { StyleSheet } from 'react-native-unistyles'
 
 type Props = ViewProps & {
-  variant?: 'regular' | 'surface' | 'surfaceSecondary' | 'brand' | 'brandSubtle'
+  tone?: 'page' | 'subtle' | 'surface' | 'accentSubtle' | 'accent'
   radius?: 'none' | 'small' | 'medium' | 'large' | 'full'
   curve?: 'circular' | 'continuous'
 }
@@ -11,14 +11,14 @@ type Props = ViewProps & {
 export { Props as ThemedViewProps }
 
 export const ThemedView: FC<Props> = ({
-  variant = 'regular',
+  tone = 'page',
   radius = 'none',
   curve = 'continuous',
   style,
   children,
   ...rest
 }) => {
-  styles.useVariants({ variant, radius, curve })
+  styles.useVariants({ tone, radius, curve })
 
   return (
     <View style={[styles.view, style]} {...rest}>
@@ -30,38 +30,38 @@ export const ThemedView: FC<Props> = ({
 const styles = StyleSheet.create(theme => ({
   view: {
     variants: {
-      variant: {
-        regular: {
+      tone: {
+        page: {
           backgroundColor: theme.colors.background.page,
         },
+        subtle: {
+          backgroundColor: theme.colors.background.subtle,
+        },
         surface: {
-          backgroundColor: theme.colors.background.surface,
+          backgroundColor: theme.colors.background.neutral.default,
         },
-        surfaceSecondary: {
-          backgroundColor: theme.colors.background.surfaceSecondary,
+        accentSubtle: {
+          backgroundColor: theme.colors.background.accentSubtle.default,
         },
-        brand: {
-          backgroundColor: theme.colors.background.brand,
-        },
-        brandSubtle: {
-          backgroundColor: theme.colors.background.brandSubtle,
+        accent: {
+          backgroundColor: theme.colors.background.accentSolid.default,
         },
       },
       radius: {
         none: {
-          borderRadius: 0,
+          borderRadius: theme.radii.corner0,
         },
         small: {
-          borderRadius: theme.radii[1],
+          borderRadius: theme.radii.corner4,
         },
         medium: {
-          borderRadius: theme.radii[3],
+          borderRadius: theme.radii.corner12,
         },
         large: {
-          borderRadius: theme.radii[5],
+          borderRadius: theme.radii.corner20,
         },
         full: {
-          borderRadius: theme.radii[12],
+          borderRadius: theme.radii.full,
         },
       },
       curve: {

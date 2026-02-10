@@ -115,7 +115,7 @@ export const FormScreen: FC = () => {
         label="Submit"
         onPress={handleSubmit(onSubmit)}
         disabled={isSubmitting}
-        variant="brand"
+        tone="accent"
         radius="full"
         size="large"
       />
@@ -125,12 +125,12 @@ export const FormScreen: FC = () => {
 
 const styles = StyleSheet.create(theme => ({
   vStack: {
-    gap: theme.spacing[6],
-    marginBottom: theme.spacing[6],
+    gap: theme.spacing.space24,
+    marginBottom: theme.spacing.space24,
   },
   hStack: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing[3],
+    gap: theme.spacing.space12,
   },
 }))
