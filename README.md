@@ -22,6 +22,13 @@ A personal iOS-first Expo boilerplate for quick starts with a typed form flow, t
 bun install
 ```
 
+`simple-git-hooks` installs automatically via `prepare` on dependency install.
+If hooks were not set up (for example after cloning or reinstall), run:
+
+```bash
+bun run prepare
+```
+
 ### Run (iOS)
 ```bash
 bun run ios
