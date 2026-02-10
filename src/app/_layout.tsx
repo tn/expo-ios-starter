@@ -4,7 +4,7 @@ import BootSplash from 'react-native-bootsplash'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { Stack } from 'expo-router'
 
-import { ThemeProvider } from '../providers/ThemeProvider'
+import { ThemeProvider } from '@/providers/ThemeProvider'
 
 export default function RootLayout() {
   useEffect(() => {

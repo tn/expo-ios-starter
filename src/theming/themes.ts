@@ -1,5 +1,5 @@
-import * as foundation from './foundation'
-import { palette } from './palette'
+import * as foundation from '@/theming/foundation'
+import { palette } from '@/theming/palette'
 
 export type Theme = typeof foundation & {
   colors: {

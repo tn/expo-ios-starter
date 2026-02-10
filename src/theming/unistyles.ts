@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native-unistyles'
 
-import { Themes, themes } from './themes'
+import { Themes, themes } from '@/theming/themes'
 
 const settings = {
   adaptiveThemes: true,

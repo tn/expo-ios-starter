@@ -1,9 +1,9 @@
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
 import { StyleSheet } from 'react-native-unistyles'
 
-import { Input, InputProps } from './Input'
-import { ThemedText } from './ThemedText'
-import { ThemedView } from './ThemedView'
+import { Input, InputProps } from '@/components/Input'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
 
 type Props<TFieldValues extends FieldValues> =
   UseControllerProps<TFieldValues> & {

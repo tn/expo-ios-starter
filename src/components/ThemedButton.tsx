@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { StyleSheet } from 'react-native-unistyles'
 
-import { ThemedText } from './ThemedText'
-import { ThemedView } from './ThemedView'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
 
 type Props = TouchableOpacityProps & {
   label?: string

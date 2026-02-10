@@ -5,7 +5,7 @@ import {
   ThemeProvider as NavigationThemeProvider,
 } from '@react-navigation/native'
 
-import { Theme, themes } from '../theming/themes'
+import { Theme, themes } from '@/theming/themes'
 
 export const ThemeContext = createContext<Theme>(themes.light)
 
