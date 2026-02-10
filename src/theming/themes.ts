@@ -3,7 +3,7 @@ import { palette } from '@/theming/palette'
 
 type InteractionScale = {
   default: string
-  hover: string
+  focused: string
   active: string
   disabled: string
 }
@@ -58,19 +58,19 @@ const createTheme = (mode: 'light' | 'dark'): Theme => {
         subtle: neutral.step2,
         neutral: {
           default: neutral.step3,
-          hover: neutral.step4,
+          focused: neutral.step4,
           active: neutral.step5,
           disabled: neutral.step3,
         },
         accentSubtle: {
           default: accent.step3,
-          hover: accent.step4,
+          focused: accent.step4,
           active: accent.step5,
           disabled: neutral.step3,
         },
         accentSolid: {
           default: accent.solid,
-          hover: accent.solidHover,
+          focused: accent.solidFocused,
           active: accent.step10,
           disabled: neutral.step4,
         },

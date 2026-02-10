@@ -89,7 +89,7 @@ const styles = StyleSheet.create(theme => ({
           color: theme.colors.foreground.neutral.primary,
         },
         focused: {
-          backgroundColor: theme.colors.background.neutral.hover,
+          backgroundColor: theme.colors.background.neutral.focused,
           borderColor: theme.colors.border.accent.focus,
           color: theme.colors.foreground.neutral.primary,
         },

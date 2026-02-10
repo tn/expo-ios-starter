@@ -4,7 +4,7 @@ type ScaleStep = `step${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12}`
 
 type RadixScale = Record<ScaleStep, string> & {
   solid: string
-  solidHover: string
+  solidFocused: string
   border: string
   borderStrong: string
   text: string
@@ -27,7 +27,7 @@ const createRadixScale = (
   return {
     ...scale,
     solid: scale.step9,
-    solidHover: scale.step10,
+    solidFocused: scale.step10,
     border: scale.step7,
     borderStrong: scale.step8,
     text: scale.step11,
