@@ -2,12 +2,18 @@
 
 A personal iOS-first Expo boilerplate for quick starts with a typed form flow, theming, and native-ready UI primitives.
 
+### Screenshot
+![App screenshot](assets/screenshots/app.png)
+
 ### Included
 - Expo Router.
+- Onboarding.
+- MMKV and Jotai.
 - Unistyles.
-- Basic theming.
+- Starter Components.
+- Token-based theming.
 - BootSplash.
-- Pre-configured ESLint and Prettier.
+- Pre-configured Eslint and Prettier.
 - Expo Symbols (Beta).
 - React Hook Form.
 - Keyboard Controller.
