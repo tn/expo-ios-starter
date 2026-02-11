@@ -1,14 +1,18 @@
 import { FC } from 'react'
 import { View } from 'react-native'
 import { StyleSheet } from 'react-native-unistyles'
-import { Link } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
 
 import { Icon } from '@/components/Icon'
 import { Square } from '@/components/Square'
 import { ThemedButton } from '@/components/ThemedButton'
 import { ThemedText } from '@/components/ThemedText'
+import { useOnboarding } from '@/hooks/useOnboarding'
 
 export const HomeScreen: FC = () => {
+  const router = useRouter()
+  const { resetToNone } = useOnboarding()
+
   return (
     <View style={styles.vStack}>
       <ThemedText size="title3">Expo iOS Starter</ThemedText>
@@ -23,9 +27,27 @@ export const HomeScreen: FC = () => {
       </View>
       <View style={styles.hStack}>
         <Square tone="surface" size={40} radius="medium">
+          <Icon name="rectangle.roundedtop.fill" size={24} />
+        </Square>
+        <ThemedText>Onboarding</ThemedText>
+      </View>
+      <View style={styles.hStack}>
+        <Square tone="surface" size={40} radius="medium">
+          <Icon name="archivebox" size={24} />
+        </Square>
+        <ThemedText>MMKV and Jotai</ThemedText>
+      </View>
+      <View style={styles.hStack}>
+        <Square tone="surface" size={40} radius="medium">
           <Icon name="paintpalette" size={24} />
         </Square>
         <ThemedText>Unistyles</ThemedText>
+      </View>
+      <View style={styles.hStack}>
+        <Square tone="surface" size={40} radius="medium">
+          <Icon name="cube.box" size={24} />
+        </Square>
+        <ThemedText>Starter Components</ThemedText>
       </View>
       <View style={styles.hStack}>
         <Square tone="surface" size={40} radius="medium">
@@ -68,9 +90,21 @@ export const HomeScreen: FC = () => {
           label="Go to Form"
           tone="accent"
           radius="full"
-          size="medium"
+          size="small"
         />
       </Link>
+      {__DEV__ ? (
+        <ThemedButton
+          label="Reset Onboarding (DEV)"
+          onPress={() => {
+            resetToNone()
+            router.replace('/onboarding')
+          }}
+          tone="accentSubtle"
+          radius="full"
+          size="small"
+        />
+      ) : null}
     </View>
   )
 }
@@ -78,7 +112,7 @@ export const HomeScreen: FC = () => {
 const styles = StyleSheet.create(theme => ({
   vStack: {
     flex: 1,
-    gap: theme.spacing.space12,
+    gap: theme.spacing.space8,
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.space24,
   },
